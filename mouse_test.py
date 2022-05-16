@@ -45,7 +45,13 @@ while True:
         cv2.circle(frame, (x, y), 12, color, -1)
 
     new_frame_time = time.time()
-    fps = 1/(new_frame_time-prev_frame_time)
+    time_diff = new_frame_time-prev_frame_time
+
+    if time_diff > 0:
+        fps = 1/(new_frame_time-prev_frame_time)
+    else:
+        fps = 0
+
     prev_frame_time = new_frame_time
 
     fps_list.append(fps)
@@ -64,5 +70,10 @@ while True:
 
 fps_list = np.array(fps_list)
 avg_fps = np.average(fps_list)
+max_fps = np.max(fps_list)
+min_fps = np.min(fps_list)
 print("Average FPS: {}".format(avg_fps))
+print("Maximum FPS: {}".format(max_fps))
+print("Minimum FPS: {}".format(min_fps))
+
 cv2.destroyAllWindows()
