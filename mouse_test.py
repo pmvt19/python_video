@@ -25,7 +25,7 @@ new_frame_time = 0
 img = np.zeros((size_x, size_y, 3))
 cv2.imshow('image', img)
 cv2.setMouseCallback('image', mouse_move)
-
+fps_list = []
 while True:
 
     frame = img.copy() 
@@ -48,6 +48,8 @@ while True:
     fps = 1/(new_frame_time-prev_frame_time)
     prev_frame_time = new_frame_time
 
+    fps_list.append(fps)
+
     frames_per_second = "FPS: " + str(fps)
 
     cv2.putText(frame, frames_per_second, (500, 15), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 0), 2)
@@ -60,5 +62,7 @@ while True:
 # cv2.imshow('image', img)
 # cv2.setMouseCallback('image', mouse_move)
 
-
+fps_list = np.array(fps_list)
+avg_fps = np.average(fps_list)
+print("Average FPS: {}".format(avg_fps))
 cv2.destroyAllWindows()
